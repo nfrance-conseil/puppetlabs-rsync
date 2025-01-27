@@ -35,6 +35,7 @@
 #   $exclude            - list of files to exclude
 #   $exclude_from       - file containing a list of files to exclude
 #   $dont_compress      - disable compression on matching files
+#   $include_module     - write this module in include directory
 #
 #   sets up an rsync server
 #
@@ -81,10 +82,9 @@ define rsync::server::module (
   $include_module     = false,
 )  {
   if $include_module {
-      concat::fragment { "frag-${name}":
+    file { "${rsync::server::include_conf_dir}/${name}.conf":
       content => template('rsync/module.erb'),
-      target  => "${rsync::server::include_conf_dir}/${name}.conf",
-      order   => $order,
+      notify => Service[$rsync::server::servicename],
     }
   } else {
     concat::fragment { "frag-${name}":
