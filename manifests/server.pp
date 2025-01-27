@@ -17,7 +17,7 @@ class rsync::server (
   $modules                                               = {},
   Optional[String[1]]                      $package_name = undef,
   String[1]                                   $conf_file = '/etc/rsync.conf',
-  String[1]                                   $include_conf_dir = '/etc/rsync.d/',
+  String[1]                            $include_conf_dir = '/etc/rsync.d/',
   String[1]                                 $servicename = 'rsync',
   Stdlib::Ensure::Service                $service_ensure = 'running',
   Variant[Boolean, Enum['mask']]         $service_enable = true,

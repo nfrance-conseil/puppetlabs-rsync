@@ -77,11 +77,20 @@ define rsync::server::module (
   $exclude            = undef,
   $exclude_from       = undef,
   $dont_compress      = undef,
-  $ignore_nonreadable = undef)  {
-
-  concat::fragment { "frag-${name}":
-    content => template('rsync/module.erb'),
-    target  => $rsync::server::conf_file,
-    order   => $order,
+  $ignore_nonreadable = undef,
+  $include_module     = false,
+)  {
+  if $include_module {
+      concat::fragment { "frag-${name}":
+      content => template('rsync/module.erb'),
+      target  => "${rsync::server::include_conf_dir}/${name}.conf",
+      order   => $order,
+    }
+  } else {
+    concat::fragment { "frag-${name}":
+      content => template('rsync/module.erb'),
+      target  => $rsync::server::conf_file,
+      order   => $order,
+    }
   }
 }
