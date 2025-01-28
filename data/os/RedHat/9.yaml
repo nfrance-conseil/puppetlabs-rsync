@@ -1,4 +1,3 @@
 ---
-
 # RHEL8 and newer have a separate package for the rsync daemon.
 rsync::server::package_name: rsync-daemon
